@@ -64,6 +64,34 @@ var jst = (function () {
         };
 
         ///
+        /// Template parsing
+        ///
+
+        var identifyDOMTemplateElements = function (rootDOMElement) {
+            return rootDOMElement.querySelectorAll(_dataAttributeSelector);
+        };
+
+        var getDOMElementTemplateData = function (DOMElement) {
+
+            var templateData = DOMElement.getAttribute(_dataAttribute);
+
+            var pairs = templateData.replace(" ", "").replace("{", "").replace("}", "").split(",");
+
+            var obj = {};
+
+            for (var i = 0; i < pairs.length; i++) {
+
+                var pair = pairs[i];
+
+                var keyValue = pair.split(":");
+
+                obj[keyValue[0]] = keyValue[1];
+            }
+
+            return obj;
+        };
+
+        ///
         /// Public API
         ///
 
@@ -85,14 +113,6 @@ var jst = (function () {
             }
 
             renderDOMElements(viewModel, rootDOMElement);
-        };
-
-        var identifyDOMTemplateElements = function (rootDOMElement) {
-            return rootDOMElement.querySelectorAll(_dataAttributeSelector);
-        };
-
-        var getDOMElementTemplateData = function (DOMElement) {
-            return JSON.parse(DOMElement.getAttribute(_dataAttribute));
         };
     }
 

@@ -7,8 +7,8 @@
 </head>
 <body>
 
-    <h1 data-template='{"prop":"mainHeader"}'></h1>
-    <p data-template='{"prop":"description"}'></p>
+    <h1 data-template="{prop: mainHeader}"></h1>
+    <p data-template="{prop: description}"></p>
     <table>
         <thead>
             <tr>
@@ -18,7 +18,7 @@
         </thead>
 
         <tbody>
-            <tr data-template='{"prop":"patients"}'>
+            <tr data-template="{prop: patients}">
                 <td></td>
             </tr>
         </tbody>
@@ -27,12 +27,12 @@
     Update the header
 
     <input type="text" name="textbox" id="headerTextBox" />
-    <button data-template='{"click":"updateHeader"}'></button>
+    <button data-template="{click: updateHeader}"></button>
 
     Update the description
 
     <input type="text" name="textbox" id="descriptionTextBox" />
-    <button data-template='{"click":"updateDescription"}'></button>
+    <button data-template="{click: updateDescription}"></button>
 
     <script src="JSTemplate/jst-0.1.0.js"></script>
     <script src="JSTemplate/view-model/indexViewModel.js"></script>

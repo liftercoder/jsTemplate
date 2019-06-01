@@ -22,5 +22,3 @@ var indexViewModel = {
 };
 
 jst.applyBinds(indexViewModel, document);
-
-sshuihsihs
