@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>52552253-fea2-4c5b-acc2-dadfb1f3604a</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>JSTemplate</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)JSTemplate\jst-0.1.0.js" />
+    <None Include="$(MSBuildThisFileDirectory)JSTemplate\lib\component.js" />
+    <None Include="$(MSBuildThisFileDirectory)JSTemplate\view-model\indexViewModel.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)index.html" />
+  </ItemGroup>
+</Project>
