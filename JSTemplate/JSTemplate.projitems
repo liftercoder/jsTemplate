@@ -10,7 +10,6 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)JSTemplate\jst-0.1.0.js" />
-    <None Include="$(MSBuildThisFileDirectory)JSTemplate\lib\component.js" />
     <None Include="$(MSBuildThisFileDirectory)JSTemplate\view-model\indexViewModel.js" />
   </ItemGroup>
   <ItemGroup>

@@ -7,42 +7,22 @@
 
 var jst = (function () {
 
-    function SimpleDictionary() {
-
-        var _dict = {};
-
-        this.add = function (key, value) {
-            _dict[key] = value;
-        };
-
-        this.remove = function (key) {
-            delete _dict[key];
-        };
-
-        this.get = function (key) {
-            return { key: key, value: _dict[key] };
-        };
-
-        this.getAtIndex = function (index) {
-
-            var keys = Object.keys(_dict);
-
-            return { key: keys[index], value: _dict[keys[index]] };
-        };
-
-        this.getAll = function () {
-            return _dict;
-        };
-    }
-
     var jst = new JSTemplate();
 
     var _protoPropertyName = "__jst_proto__";
+
+    ///
+    /// ~ctr
+    ///
 
     function JSTemplate() {
 
         var _dataAttribute = "data-template",
             _dataAttributeSelector = "[" + _dataAttribute + "]";
+
+        ///
+        /// Events
+        ///
 
         var registerTemplateEvent = function (DOMElement, viewModel) {
 
@@ -56,7 +36,7 @@ var jst = (function () {
         };
 
         ///
-        ///
+        /// DOM
         ///
 
         var renderDOMElements = function (viewModel, rootDOMElement) {
@@ -111,24 +91,20 @@ var jst = (function () {
             return rootDOMElement.querySelectorAll(_dataAttributeSelector);
         };
 
-        ///
-        ///
-        ///
-
         var getDOMElementTemplateData = function (DOMElement) {
             return JSON.parse(DOMElement.getAttribute(_dataAttribute));
-        };
-
-        var isObservable = function (instance) {
-            return typeof instance == "function" && instance[_protoPropertyName];
         };
     }
 
     ///
-    ///
+    /// Observables
     ///
 
     var _latestValuePropertyName = "_latestValue";
+
+    var isObservable = function (instance) {
+        return typeof instance == "function" && instance[_protoPropertyName];
+    };
 
     jst.observable = function (data) {
 
@@ -164,6 +140,10 @@ var jst = (function () {
 
         return observable;
     };
+
+    ///
+    /// End
+    ///
 
     return jst;
 
