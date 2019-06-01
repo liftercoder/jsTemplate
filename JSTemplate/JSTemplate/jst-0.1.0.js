@@ -30,6 +30,7 @@ var jst = (function () {
 
             // Only click is supported at the moment
             if (templateData.click) {
+
                 var eventFn = viewModel[templateData.click];
                 DOMElement.addEventListener("click", eventFn.bind(viewModel));
             }
@@ -44,17 +45,15 @@ var jst = (function () {
             var DOMElements = identifyDOMTemplateElements(rootDOMElement);
 
             for (var i = 0; i < DOMElements.length; i++) {
-
                 renderDOMElement(DOMElements[i], viewModel);
             }
         };
 
         var renderDOMElement = function (DOMElement, viewModel) {
 
-            var templateData = getDOMElementTemplateData(DOMElement),
-                propertyName = templateData.prop;
-
-            var propertyValue = viewModel[propertyName];
+            var templateData = getDOMElementTemplateData(DOMElement)
+              , propertyName = templateData.prop
+              , propertyValue = viewModel[propertyName];
 
             if (typeof propertyValue === "function" && isObservable(propertyValue)) {
                 propertyValue = propertyValue();
@@ -73,17 +72,14 @@ var jst = (function () {
 
         var getDOMElementTemplateData = function (DOMElement) {
 
-            var templateData = DOMElement.getAttribute(_dataAttribute);
-
-            var pairs = templateData.replace(" ", "").replace("{", "").replace("}", "").split(",");
-
-            var obj = {};
+            var templateData = DOMElement.getAttribute(_dataAttribute)
+              , pairs = templateData.replace(" ", "").replace("{", "").replace("}", "").split(",")
+              , obj = {};
 
             for (var i = 0; i < pairs.length; i++) {
 
-                var pair = pairs[i];
-
-                var keyValue = pair.split(":");
+                var pair = pairs[i]
+                  , keyValue = pair.split(":");
 
                 obj[keyValue[0]] = keyValue[1];
             }
@@ -101,9 +97,8 @@ var jst = (function () {
 
             for (var i = 0; i < DOMTemplateElements.length; i++) {
 
-                var templateData = getDOMElementTemplateData(DOMTemplateElements[i]);
-
-                var viewModelPropertyName = templateData.prop;
+                var templateData = getDOMElementTemplateData(DOMTemplateElements[i])
+                  , viewModelPropertyName = templateData.prop;
 
                 if (isObservable(viewModel[viewModelPropertyName])) {
                     viewModel[viewModelPropertyName].subscribers.push(DOMTemplateElements[i]);
@@ -133,6 +128,7 @@ var jst = (function () {
             if (arguments.length > 0) {
 
                 if (observable[_latestValuePropertyName] != arguments[0]) {
+
                     observable[_latestValuePropertyName] = arguments[0];
 
                     observable.notifySubscribers(arguments[0]);
@@ -141,7 +137,6 @@ var jst = (function () {
                 return this;
 
             } else {
-
                 return observable[_latestValuePropertyName];
             }
         }
@@ -162,7 +157,7 @@ var jst = (function () {
     };
 
     ///
-    /// End
+    /// Export
     ///
 
     return jst;
