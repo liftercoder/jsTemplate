@@ -20,7 +20,8 @@
 
         <tbody>
             <tr data-template="{prop: patients}">
-                <td></td>
+                <td data-template="{prop: patients.PASId}"></td>
+                <td data-template="{prop: patients.arived}"></td>
             </tr>
         </tbody>
     </table>
@@ -34,6 +35,14 @@
 
     <input type="text" name="textbox" id="descriptionTextBox" />
     <button data-template="{click: updateDescription}"></button>
+
+    Add new patient
+
+    <button data-template="{click: addPatient}"></button>
+
+    Update last patient
+
+    <button data-template="{click: updatePatient}"></button>
 
     <!-- JSTemplate -->
 

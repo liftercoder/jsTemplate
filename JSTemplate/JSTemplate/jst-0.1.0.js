@@ -52,10 +52,10 @@ var jst = (function () {
         var renderDOMElement = function (DOMElement, viewModel) {
 
             var templateData = getDOMElementTemplateData(DOMElement)
-              , propertyName = templateData.prop
-              , propertyValue = viewModel[propertyName];
+                , propertyName = templateData.prop
+                , propertyValue = viewModel[propertyName];
 
-            if (typeof propertyValue === "function" && isObservable(propertyValue)) {
+            if (isObservable(propertyValue)) {
                 propertyValue = propertyValue();
             }
 
@@ -73,13 +73,13 @@ var jst = (function () {
         var getDOMElementTemplateData = function (DOMElement) {
 
             var templateData = DOMElement.getAttribute(_dataAttribute)
-              , pairs = templateData.replace(" ", "").replace("{", "").replace("}", "").split(",")
-              , obj = {};
+                , pairs = templateData.replace(" ", "").replace("{", "").replace("}", "").split(",")
+                , obj = {};
 
             for (var i = 0; i < pairs.length; i++) {
 
                 var pair = pairs[i]
-                  , keyValue = pair.split(":");
+                    , keyValue = pair.split(":");
 
                 obj[keyValue[0]] = keyValue[1];
             }
@@ -98,7 +98,7 @@ var jst = (function () {
             for (var i = 0; i < DOMTemplateElements.length; i++) {
 
                 var templateData = getDOMElementTemplateData(DOMTemplateElements[i])
-                  , viewModelPropertyName = templateData.prop;
+                    , viewModelPropertyName = templateData.prop;
 
                 if (isObservable(viewModel[viewModelPropertyName])) {
                     viewModel[viewModelPropertyName].subscribers.push(DOMTemplateElements[i]);
@@ -118,7 +118,7 @@ var jst = (function () {
     var _latestValuePropertyName = "_latestValue";
 
     var isObservable = function (instance) {
-        return typeof instance == "function" && instance[_protoPropertyName];
+        return (typeof instance == "function" || Array.isArray(instance)) && instance[_protoPropertyName];
     };
 
     jst.observable = function (data) {
@@ -137,6 +137,7 @@ var jst = (function () {
                 return this;
 
             } else {
+
                 return observable[_latestValuePropertyName];
             }
         }
@@ -154,6 +155,65 @@ var jst = (function () {
         };
 
         return observable;
+    };
+
+    ///
+    ///
+    ///
+
+    jst.observableCollection = function (data) {
+
+        function observableCollection() {
+
+            // Want to re-populate collection
+            if (arguments.length > 0) {
+
+                if (!Array.isArray(arguments[0])) {
+                    throw "tried to initialise observable collection with data that's not array of objects";
+                }
+
+                this._observables = [];
+
+                for (var i = 0; i < arguments[0].length; i++) {
+
+                    this._observables.push(jst.observable(data[i]));
+                }
+            }
+        }
+
+        observableCollection[_protoPropertyName] = jst.observableCollection;
+
+        observableCollection["_observables"] = [];
+
+        observableCollection.subscribers = [];
+
+        for (var i = 0; i < data.length; i++) {
+
+            observableCollection._observables.push(jst.observable(data[i]));
+        }
+
+        observableCollection.add = function (data) {
+
+            this._observables.push(jst.observable(data));
+
+            // Notify
+            //..
+        };
+
+        observableCollection.updateAt = function (collectionPosition, data) {
+
+            if (collectionPosition === this._observables.length) {
+                throw "collectionPosition out of bounds of array";
+            }
+
+            this._observables[collectionPosition] = jst.observable(data);
+
+            // Notify
+            //..
+
+        };
+
+        return observableCollection;
     };
 
     ///
